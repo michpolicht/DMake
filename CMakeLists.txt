@@ -17,9 +17,19 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
 add_subdirectory(subtree/CMake)
 
+include(GenerateExportHeader)
+
 include(recurse_subproject_dirs)
 set(DMAKE_TOOLS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools)
 set(DMAKE_MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/modules)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/bin)
+
+# qt_policy macro is defined in Core and QTP0001 is defined in Qml component.
+find_package(Qt6 REQUIRED COMPONENTS Core Qml)
+qt_policy(SET QTP0001 NEW)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
@@ -36,3 +46,4 @@ foreach(SUBDIR ${SUBDIRS})
     message(STATUS "Adding subproject: ${SUBDIR}")
     add_subdirectory(${SUBDIR})
 endforeach()
+
