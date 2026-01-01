@@ -3,3 +3,6 @@ build
 
 # CMakeLists.txt.user file created by QtCreator
 CMakeLists.txt.user
+
+# Vi temporary files
+*.swp
