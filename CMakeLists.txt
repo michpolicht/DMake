@@ -47,3 +47,11 @@ foreach(SUBDIR ${SUBDIRS})
     add_subdirectory(${SUBDIR})
 endforeach()
 
+# Copy cmake binary to dmake binary directory as it's needed by various CMake scripts.
+add_custom_target(copy_cmake ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:cmake>
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<TARGET_FILE_NAME:cmake>
+    COMMENT "Copying cmake executable to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+)
+add_dependencies(copy_cmake cmake)
