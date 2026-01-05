@@ -2,6 +2,26 @@
 
 Experimental QML frontend to CMake.
 
+The project aims at answering the question whether it would be  possible to
+define CMake project in a declarative fashion utilizing a full power of QML
+language:
+
+```CMakeLists.qml
+import DMakeLib
+
+Project {
+    name: "SampleApp"
+
+    AddExecutable {
+        name: "SampleApp"
+
+        sources: [
+            "main.cpp"
+        ]
+    }
+}
+```
+
 ## Project status
 
 This is currently a toy project. I wanted to know whether it would be
