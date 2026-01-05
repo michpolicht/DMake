@@ -130,15 +130,6 @@ void DeclarativeNinjaGenerator::Configure()
                      });
     m_qmlApplicationEngine->load(QString::fromStdString(projectFilePath));
 
-    // auto result = cmProjectCommand({"test"}, executionStatus);
-    // if (!result) {
-    //     qDebug() << executionStatus.GetError();
-    // }
-    // result = cmAddExecutableCommand({"test", "main.cpp"}, executionStatus);
-    // if (!result) {
-    //     qDebug() << executionStatus.GetError();
-    // }
-
     // Put a copy of each global target in every directory.
     {
         std::vector<GlobalTargetInfo> globalTargets;
