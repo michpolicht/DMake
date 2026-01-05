@@ -16,9 +16,12 @@ qt_add_library(DMakeLib STATIC)
 qt_add_qml_module(DMakeLib
   URI DMakeLib
   VERSION 1.0
-  SOURCES
-  cpp/DMakeLib/DMake.cpp
-  cpp/DMakeLib/DMake.hpp
+  SOURCES cpp/DMakeLib/DMake.cpp cpp/DMakeLib/DMake.hpp
+  SOURCES cpp/DMakeLib/DeclarativeNinjaGenerator.hpp cpp/DMakeLib/DeclarativeNinjaGenerator.cpp
+  SOURCES cpp/DMakeLib/DMakeItem.hpp cpp/DMakeLib/DMakeItem.cpp
+  SOURCES cpp/DMakeLib/CMakeCommand.hpp cpp/DMakeLib/CMakeCommand.cpp
+  SOURCES cpp/DMakeLib/Project.hpp cpp/DMakeLib/Project.cpp
+  SOURCES cpp/DMakeLib/AddExecutable.hpp cpp/DMakeLib/AddExecutable.cpp
 )
 
 generate_export_header(DMakeLib EXPORT_MACRO_NAME DMAKE_LIB_API EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/cpp/DMakeLib/autogen/ApiMacro.hpp)

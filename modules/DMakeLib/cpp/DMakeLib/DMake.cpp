@@ -1,5 +1,7 @@
 #include "DMake.hpp"
 
+#include "DeclarativeNinjaGenerator.hpp"
+
 #include <cmGlobalFastbuildGenerator.h>
 #include <cmMessenger.h>
 #include <cmFileTimeCache.h>
@@ -127,10 +129,15 @@ bool cmakeCheckStampList(std::string const& stampList)
 
 namespace DMakeLib {
 
-DMake::DMake(cmState::Role role, cmState::TryCompile isTryCompile, QObject *parent)
-    : QObject(parent),
-    cmake(role, isTryCompile)
+DMake::DMake(QQmlApplicationEngine *qmlApplicationEngine,
+             cmState::Role role,
+             cmState::TryCompile isTryCompile,
+             QObject *parent)
+    : QObject(parent)
+    , m_qmlApplicationEngine(qmlApplicationEngine)
+    , cmake(role, isTryCompile)
 {
+    Generators.push_back(DeclarativeNinjaGenerator::NewFactory(qmlApplicationEngine));
 }
 
 int DMake::run(const std::vector<std::string> &args, bool noconfigure)
