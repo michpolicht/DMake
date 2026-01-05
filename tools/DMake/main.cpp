@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <DMakeLib/DMake.hpp>
 
 #include <cmCommandLineArgument.h>
 #include <cmExecutionStatus.h>
@@ -6,7 +6,11 @@
 #include <cmProjectCommand.h>
 #include <cmake.h>
 
-#include <DMakeLib/DMake.hpp>
+#include <QCoreApplication>
+#include <QQmlApplicationEngine>
+#include <QtQml/QQmlExtensionPlugin>
+
+Q_IMPORT_QML_PLUGIN(DMakeLibPlugin)
 
 // using Command = std::function<bool(std::vector<cmListFileArgument> const&,
 //                                    cmExecutionStatus&)>;
@@ -29,7 +33,9 @@ std::function<bool(std::string const &value)> getShowCachedCallback(bool &show_f
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QCoreApplication app(argc, argv);
+
+    QQmlApplicationEngine qmlApplicationEngine;
 
     cmsys::Encoding::CommandLineArguments args = cmsys::Encoding::CommandLineArguments::Main(argc,
                                                                                              argv);
@@ -151,7 +157,7 @@ int main(int argc, char *argv[])
     }
 
     // qDebug() << CMAKE_DATA_DIR;
-    DMakeLib::DMake dmake(cmState::Role::Project);
+    DMakeLib::DMake dmake(&qmlApplicationEngine, cmState::Role::Project);
     int res = dmake.run(parsedArgs, view_only);
 
     if (list_cached || list_all_cached) {
@@ -199,29 +205,10 @@ int main(int argc, char *argv[])
     dmake.StopDebuggerIfNeeded(0);
 #endif
 
-    return EXIT_SUCCESS;
-    // cmake cm(cmState::Role::Project);
-    // cm.AddCMakePaths();
+    // Quit without running event loop if no QML file was specified.
+    if (qmlApplicationEngine.rootObjects().empty()) {
+        return EXIT_SUCCESS;
+    }
 
-    // qDebug() << "CreateAndSetGlobalGenerator: " << cm.CreateAndSetGlobalGenerator("Ninja");
-    // cmMakefile makefile(dmake.GetGlobalGenerator(), dmake.GetCurrentSnapshot());
-    // cmExecutionStatus executionStatus(makefile);
-
-    // auto result = cmProjectCommand({"test"}, executionStatus);
-    // if (!result) {
-    //     qDebug() << executionStatus.GetError();
-    // }
-
-    // Set up code that uses the Qt event loop here.
-    // Call a.quit() or a.exit() to quit the application.
-    // A not very useful example would be including
-    // #include <QTimer>
-    // near the top of the file and calling
-    // QTimer::singleShot(5000, &a, &QCoreApplication::quit);
-    // which quits the application after 5 seconds.
-
-    // If you do not need a running Qt event loop, remove the call
-    // to a.exec() or use the Non-Qt Plain C++ Application template.
-
-    // return a.exec();
+    return app.exec();
 }

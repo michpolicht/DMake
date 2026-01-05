@@ -21,6 +21,7 @@ target_link_libraries(dmake
 
   CMakeLib
   DMakeLib
+  DMakeLibplugin
 )
 
 include(GNUInstallDirs)
