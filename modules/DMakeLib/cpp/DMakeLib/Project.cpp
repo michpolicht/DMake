@@ -29,7 +29,12 @@ QQmlListProperty<CMakeCommand> Project::commands() const
 
 void Project::execute(cmExecutionStatus &executionStatus)
 {
-    cmProjectCommand({m_name.toStdString()}, executionStatus);
+    auto result = cmProjectCommand({m_name.toStdString()}, executionStatus);
+    if (!result) {
+        qCritical() << "Error: " << executionStatus.GetError();
+        return;
+    }
+
     for (auto &&command : m_commandList) {
         command->execute(executionStatus);
     }

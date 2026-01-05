@@ -41,7 +41,11 @@ void AddExecutable::execute(cmExecutionStatus &executionStatus)
     for (auto &&source : m_sources) {
         args.push_back(source.toStdString());
     }
-    cmAddExecutableCommand(args, executionStatus);
+
+    auto result = cmAddExecutableCommand(args, executionStatus);
+    if (!result) {
+        qCritical() << "Error: " << executionStatus.GetError();
+    }
 }
 
 } // namespace DMakeLib
