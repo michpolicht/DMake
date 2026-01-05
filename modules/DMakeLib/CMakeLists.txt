@@ -18,7 +18,6 @@ qt_add_qml_module(DMakeLib
   VERSION 1.0
   SOURCES cpp/DMakeLib/DMake.cpp cpp/DMakeLib/DMake.hpp
   SOURCES cpp/DMakeLib/DeclarativeNinjaGenerator.hpp cpp/DMakeLib/DeclarativeNinjaGenerator.cpp
-  SOURCES cpp/DMakeLib/DMakeItem.hpp cpp/DMakeLib/DMakeItem.cpp
   SOURCES cpp/DMakeLib/CMakeCommand.hpp cpp/DMakeLib/CMakeCommand.cpp
   SOURCES cpp/DMakeLib/Project.hpp cpp/DMakeLib/Project.cpp
   SOURCES cpp/DMakeLib/AddExecutable.hpp cpp/DMakeLib/AddExecutable.cpp
